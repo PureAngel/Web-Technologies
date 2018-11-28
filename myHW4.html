@@ -1,0 +1,173 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>myHW4</title>
+</head>
+
+<body>
+    <div align="center">
+        <h1 id="title">Enter URL for Trucking List JSON File</h1>
+        <form name="myForm" method="post" id="trucklistForm">
+            <input name="URL" type="text" maxlength="255" size="100" value="truckinglist.json" />
+            <br/>
+            <input type="button" name="submit" value="Submit Query" onclick="viewJSON(this.form)" />
+        </form>
+
+    </div>
+    <script type="text/javascript">
+        function invalidInput(form) {
+            var x = form.URL.value;
+            if (x == null || x == "") {
+                alert("Input cannot be empty!");
+                exit();
+            }
+        }
+
+        // defer onload
+
+        function viewJSON(what) {
+            invalidInput(what); // Error Handling: empty input
+
+            var URL = what.URL.value;
+
+            function loadJSON(url) {
+                if (window.XMLHttpRequest) { // code for IE7+, Firefox, Chrome, Opera, Safari
+                    xmlhttp = new XMLHttpRequest();
+                }
+                //                else { // code for IE6, IE5
+                //                    xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+                //                }
+                xmlhttp.open("GET", url, false);
+                
+                xmlhttp.onreadystatechange = function checkFileExit() {
+                    if (xmlhttp.readyState == 4) {
+                        if (xmlhttp.status == 404) {
+                            alert("File does not exist!");
+                        }
+                    }
+                }
+                xmlhttp.overrideMimeType("text/html");
+                xmlhttp.setRequestHeader("Content-Type", "application/json");
+                xmlhttp.send();
+
+                var test = xmlhttp.responseText;
+
+                jsonObj = JSON.parse(test);
+                console.log(jsonObj);
+                return jsonObj;
+            }
+            jsonObj = loadJSON(URL);
+
+            if (window.ActiveXObject) //if IE, simply execute script (due to async prop).
+            {
+                if (jsonObj.parseError.errorCode != 0) {
+                    var myErr = jsonObj.parseError;
+                    generateError(jsonObj);
+                    hWin = window.open("", "Error", "height=300,width=340");
+                    hWin.document.write(html_text);
+                } else {
+                    generateHTML(jsonObj);
+                    hWin = window.open("", "Assignment4", "height=800,width=600");
+                    hWin.document.write(html_text);
+                }
+            } else //else if FF, execute script once JSON object has loaded
+            {
+                jsonObj.onload = generateHTML(jsonObj);
+                hWin = window.open("", "Assignment4", "height=800,width=600");
+                hWin.document.write(html_text);
+            }
+            hWin.document.close();
+        }
+
+
+        function generateHTML(jsonObj) {
+            root = jsonObj.DocumentElement;
+            html_text = "<html><head><title>Top Trucking Companies</title></head><body>";
+            html_text += "<table border='2'>";
+            headerList = jsonObj.Mainline.Table.Header.Data;
+            companies = jsonObj.Mainline.Table.Row; // an array of companies 
+            
+            // check whether the JSON file contains companies
+            if(companies == null || companies.length == 0) {
+                alert("No trucking companies!");
+            }
+
+            companyNodeList = companies[0];
+            html_text += "<tbody>";
+            html_text += "<tr>";
+            x = 0;
+            y = 0;
+
+            // output the headers
+            var header_keys = Object.keys(companyNodeList);
+            for (i = 0; i < header_keys.length; i++) {
+                header = header_keys[i];
+                //real_header = header;
+                if (header == "Company") {
+                    header = headerList[0];
+                    x = 120;
+                    y = 55;
+                }
+                if (header == "Services") {
+                    header = headerList[1];
+                    x = 100;
+                    y = 67;
+                }
+                if (header == "Hubs") {
+                    header = headerList[2];
+                }
+                if (header == "Revenue") {
+                    header = headerList[3];
+                }
+                if (header == "HomePage") {
+                    header = headerList[4];
+                }
+                if (header == "Logo") {
+                    header = headerList[5];
+                }
+                html_text += "<th>" + header + "</th>";
+            }
+            html_text += "</tr>";
+
+            // output out the values
+            
+            
+            for (i = 0; i < companies.length; i++) { // iterate all the companies
+                companyNodeList = companies[i]; // the ith company
+                // output the information of company
+                html_text += "<tr>"; // start a new row of the output table
+                var company_keys = Object.keys(companyNodeList);
+                for (j = 0; j < company_keys.length; j++) {
+                    prop = company_keys[j];
+                    if (company_keys[j] == "Hubs") {
+                        hub_info = companyNodeList[prop].Hub;
+
+                        html_text += "<td>";
+                        for (k = 0; k < hub_info.length; k++) {
+                            if (k == 0) {
+                                html_text += "<li>" + "<b>" + hub_info[k] + "</b>" + "</li>";
+                            } else {
+                                html_text += "<li>" + hub_info[k] + "</li>";
+                            }
+                        }
+                        html_text += "</td>";
+                    } else if (company_keys[j] == "Logo") {
+                        html_text += "<td><img src='" + companyNodeList[prop] + "' width='" + x + "' height='" + y + "'></td>";
+                    } else if (company_keys[j] == "HomePage") {
+                        html_text += "<td><a href = '" + companyNodeList[prop] + "'>" + companyNodeList[prop] + "</a>";
+                    } else {
+                        html_text += "<td>" + companyNodeList[prop] + "</td>";
+                    }
+                }
+                html_text += "</tr>";
+            }
+            html_text += "</tbody>";
+            html_text += "</table>";
+            html_text += "</body></html>";
+        }
+
+    </script>
+</body>
+
+</html>

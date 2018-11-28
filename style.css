@@ -1,0 +1,379 @@
+/** {
+    background: #000 !important;
+    color: #0f0 !important;
+    outline: solid #f00 1px !important;
+}*/
+
+html {
+    width: 1190px;
+    width: 100%;
+    overflow-x: hidden;
+    background-size: 1190px;
+    text-align: center;
+}
+
+.background1 {
+    background-image: url(http://cs-server.usc.edu:45678/hw/hw3/images/image6.jpg);
+    background-repeat: no-repeat;
+    text-align: center;
+    width: 1190px;
+    height: 650px;
+    background-attachment: fixed;
+    /*clip-path:inset(0px 150px 220px 150px);*/
+    background-size: 1900px 850px;
+    background-position: -350px 140px;
+    border-width: 0;
+    overflow: hidden;
+}
+
+.background2 {
+    background-image: url(http://cs-server.usc.edu:45678/hw/hw3/images/image5.jpg);
+    background-repeat: no-repeat;
+    width: 1190px;
+    height: 650px;
+    background-attachment: fixed;
+    background-size: cover;
+    border-width: 0;
+    padding: 0;
+    opacity: 0.8;
+    background-position: 0 -290px;
+}
+
+.header {
+    text-align: left;
+    text-indent: 163px;
+    line-height: 5px;
+    padding-top: 2em;
+    padding-bottom: 0;
+    font-size: 15px;
+}
+
+.line1 {
+    margin-bottom: 0;
+}
+
+.line2 {
+    margin-top: 0;
+}
+
+.title {
+    font-size: 60px;
+    font-weight: 400;
+    padding-top: 0;
+    margin-top: 0;
+}
+
+body {
+    width: 1190px;
+    margin: 0 auto;
+    /*font-family: sans-serif;*/
+    font-family: serif;
+}
+
+nav {
+    width: 1190px;
+    background-color: white;
+    height: 4em;
+    text-align: center;
+}
+
+ul {
+    width: 1190px;
+    float: center;
+    list-style-type: none;
+    border-style: solid;
+    border-top-color: gainsboro;
+    border-width: thin;
+    border-bottom: none;
+    border-left: none;
+    border-right: none;
+    padding: 1em;
+    text-align: center;
+    display: inline-block;
+}
+
+li {
+    float: left;
+    text-align: center;
+    border-color: white;
+}
+
+a {
+    text-decoration: none;
+    padding: 0px 45px;
+    text-indent: 50px;
+    display: inline-block;
+    text-align: center;
+}
+
+a.Vision,
+a.Menu,
+a.Order,
+a.Contact:link {
+    color: black;
+}
+
+a.Vision,
+a.Menu,
+a.Order,
+a.Contact:visited {
+    color: black;
+}
+
+a.Vision,
+a.Menu,
+a.Order,
+a.Contact:hover {
+    color: black;
+}
+
+a.Vision,
+a.Menu,
+a.Order,
+a.Contact:active {
+    color: black;
+}
+
+.content {
+    background-color: white;
+}
+
+a.leftLink,
+a.rightLink:link {
+    color: black;
+}
+
+a.leftLink,
+a.rightLink:visited {
+    color: black;
+}
+
+a.rightLink:active {
+    color: gainsboro;
+}
+
+a.leftLink:active {
+    color: gainsboro;
+}
+
+a.rightLink:hover {
+    color: gainsboro;
+}
+
+a.leftLink:hover {
+    color: gainsboro;
+}
+
+#bottomLink:link {
+    color: black;
+}
+
+#bottomLink:visited {
+    color: black;
+}
+
+#bottomLink:active {
+    color: gainsboro;
+}
+
+#bottomLink:hover {
+    color: gainsboro;
+}
+
+.Home {
+    color: #bc9b5d;
+}
+
+h1 {
+    color: #bc9b5d;
+    text-align: center;
+    font-family: sans-serif;
+    padding-bottom: 0;
+}
+
+h2 {
+    color: #bc9b5d;
+    font-style: italic;
+    font-family: libre, serif, times new roman;
+    font-weight: 600;
+    font-size: 35px;
+}
+
+p {
+    font-weight: 300;
+    font-family: helvetica;
+    line-height: 20px;
+}
+
+.restaurant {
+    font-size: 12px;
+    margin-top: 30px;
+}
+
+h2.local {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+#website {
+    text-align: center;
+    padding-top: 20px;
+    padding-bottom: 0;
+}
+
+#comment {
+    text-align: center;
+    font-family: serif, times new roman;
+    padding-bottom: 45px;
+    padding-top: 0;
+    padding-left: 0;
+    margin-left: 0;
+    margin-bottom: 10px;
+    font-size: 33px;
+}
+
+.left {
+    float: left;
+    width: 500px;
+    text-align: left;
+    padding-top: 100px;
+    padding-left: 30px;
+}
+
+h2.freshest {
+    margin-bottom: 0;
+}
+
+.img3 {
+    text-align: right;
+    padding-left: 100px;
+}
+
+.img2 {
+    text-align: right;
+    padding-top: 30px;
+    padding-left: 100px;
+}
+
+.leftwords {
+    text-align: left;
+    padding-top: 2.5em;
+    padding-left: 100px;
+    width: 450px;
+}
+
+.leftLink {
+    text-align: left;
+    padding-left: 0;
+    margin: 0;
+    text-indent: 0;
+    font-weight: 500;
+}
+
+.rightLink {
+    text-align: left;
+    padding-left: 0;
+    margin: 0;
+    text-indent: 0;
+    font-weight: 500;
+}
+
+.right {
+    margin-left: 610px;
+    width: 500px;
+    text-align: left;
+    padding-top: 20px;
+}
+
+.rightWords {
+    margin-left: 10px;
+}
+
+.img1 {
+    padding-top: 60px;
+}
+
+.img4 {
+    padding-top: 30px;
+}
+
+.freshest {
+    color: #bc9b5d;
+    font-style: italic;
+    font-family: libre, serif, times new roman;
+    font-weight: 600;
+    font-size: 35px;
+    padding-bottom: 0;
+    margin-bottom: 0;
+}
+
+.freshest2 {
+    color: #bc9b5d;
+    font-style: italic;
+    font-family: libre, serif, times new roman;
+    font-weight: 600;
+    font-size: 35px;
+    padding-top: 0;
+    margin-top: 20px;
+}
+
+.bottom {
+    text-align: center;
+    padding-top: 40px;
+    padding-left: 100px;
+}
+
+.bottomimg {
+    text-align: center;
+    position: relative;
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-right: 40px;
+    background-image: url(http://cs-server.usc.edu:45678/hw/hw3/images/image7.jpg);
+    background-repeat: no-repeat;
+    width: 950px;
+    height: 617px;
+    background-position: center;
+    background-color: white;
+}
+
+#words {
+    text-align: center;
+    padding-top: 20px;
+    margin-top: 25px;
+}
+
+#wordsLink {
+    text-align: center;
+    background-color: white;
+    vertical-align: middle;
+    position: absolute;
+    width: 400px;
+    height: 150px;
+    margin-top: 230px;
+    margin-left: 300px;
+}
+
+#bottomLink {
+    padding-top: 0;
+    font-size: 30px;
+    text-align: center;
+    text-indent: 0;
+    font-weight: 500;
+}
+
+footer {
+    position: absolute;
+    width: 1190px;
+    height: 15em;
+    background-color: #bc9b5d;
+    padding-top: 0;
+    margin: 0;
+}
+
+p.footer {
+    text-align: left;
+    padding-top: 3em;
+    padding-left: 700px;
+    color: white;
+}

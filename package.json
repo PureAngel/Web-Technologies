@@ -1,0 +1,19 @@
+{
+  "name": "app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node myNode.js"
+  },
+  "author": "Xueying Bai",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.4",
+    "express": "*",
+    "http": "*",
+    "request": "^2.85.0",
+    "yelp-fusion": "^2.0.3"
+  }
+}

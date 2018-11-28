@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!-- add Angularjs -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <!-- google places library & add autocomplete -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC6A-agVKEwgIed6VeKEYHRIblKM6sJRjg&libraries=places&callback=initAutocomplete" async defer></script>
+    <!-- fontawesome js -->
+    <script defer src="https://use.fontawesome.com/releases/v5.0.9/js/all.js" integrity="sha384-8iPTk2s/jMVj81dnzb/iFR2sdA7u06vHJyyLlAd4snFpCl/SnyUjRrbdJsw1pGIl" crossorigin="anonymous"></script>
+    <!-- moment js -->
+    <script src="http://momentjs.com/downloads/moment.min.js"></script>
+    <!-- twitter -->
+    <script async src="https://platform.twitter.com/widgets.js"></script>
+    <!-- fontawesome css -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.9/css/all.css" integrity="sha384-5SOiIsAziJl6AWe0HWRKTXlfcSHKmYV4RBF18PPJ173Kzn7jzMyFuTtk8JA7QQG1" crossorigin="anonymous">
+
+    <style>
+        #form_section {
+            width: 100%;
+            margin: auto;
+            padding-bottom: 20px;
+        }
+
+        #myForm {
+            background-color: #f8f8f8;
+            border-style: solid;
+            border-width: thin;
+            border-radius: 10px;
+            border-color: #d3d3d3;
+            width: 70%;
+            margin: 0 auto;
+            padding-bottom: 20px;
+        }
+
+        #form_title {
+            text-align: center;
+            font-size: 30px;
+            margin-top: 10px;
+            padding-top: 10px;
+        }
+
+        #form_elements {
+            margin: 0 auto;
+            width: 75%;
+        }
+
+        #search {
+            background-color: "#2b7af6";
+        }
+
+        #Results,
+        #Favorites {
+            border-radius: 2px;
+            border-style: hidden;
+            margin: 0 auto;
+        }
+
+        #body_container {
+            margin: 0 auto;
+            width: 90%;
+        }
+
+        #button_table {
+            width: 20%;
+        }
+
+        td#previous,
+        td#next {
+            padding-right: 5px;
+        }
+
+        #place_name {
+            font-size: 20px;
+        }
+
+        #results_favorites_button {
+            margin: 0 auto;
+            text-align: center;
+            align-content: center;
+            align-self: center;
+        }
+
+        #fav_twitter_container {
+            float: right;
+        }
+
+        #keyword_alert {
+            color: red;
+        }
+
+        .error {
+            color: red;
+        }
+
+        #progress_bar {
+            margin-top: 30px;
+        }
+
+        #showPlaces {
+            margin-top: 20px;
+            text-align: left;
+            margin: 0 auto;
+            padding-top: 15px;
+            padding-bottom: 15px;
+        }
+
+        #places,
+        #favorites_table {
+            margin: 0 auto;
+            width: 100%;
+            padding-top: 20px;
+        }
+
+        .places_row:hover {
+            background-color: #ebebeb;
+        }
+
+        #placeTableHeader:hover {
+            background-color: white;
+        }
+
+        #placeTableHeader {
+            border-top: thin;
+            border-top-color: #fff;
+        }
+
+        #page_buttons_results,
+        #page_buttons_fav {
+            text-align: center;
+            margin: 0 auto;
+        }
+
+        #Details_button {
+            text-align: right;
+        }
+
+        #Details {
+            background-color: white;
+            width: 70px;
+            height: 28px;
+        }
+
+        #next {
+            text-align: center;
+            margin: 0 auto;
+        }
+
+        #place_name {
+            text-align: center;
+        }
+
+        table {
+            margin: 0 auto;
+            text-align: left;
+            width: 100%;
+        }
+
+        #info_col_1 {
+            font-weight: bold;
+        }
+
+        #rating_time {
+            display: inline-block;
+            position: relative;
+        }
+
+        .stars-outer {
+            display: inline-block;
+            position: relative;
+            font-family: FontAwesome;
+        }
+
+        #reviews_star {
+            color: #d57343;
+        }
+
+        .stars-inner,
+        .reviews_stars-inner0,
+        .reviews_stars-inner1,
+        .reviews_stars-inner2,
+        .reviews_stars-inner3,
+        .reviews_stars-inner4 {
+            position: absolute;
+            top: 0;
+            left: 0;
+            white-space: nowrap;
+            overflow: hidden;
+            width: 0;
+            color: #d57343;
+        }
+
+        #outer_stars,
+        #reviews_outer_stars {
+            opacity: 0;
+        }
+
+        .fav_star_push {
+            color: #f9d656;
+        }
+
+        #get_directions {
+            margin-top: 6px;
+        }
+
+        #toggle_map_1,
+        #toggle_map_2 {
+            float: left;
+            text-align: left;
+            margin-bottom: 10px;
+        }
+
+        #toggle_button_1,
+        #toggle_button_2 {
+            float: left;
+            width: "30px";
+            height: "30px";
+            background-color: white;
+            border-color: #eaeaea;
+        }
+
+        #map {
+            width: 100%;
+            height: 300px;
+        }
+
+        /*
+        #route-panel {
+            font-family: 'Roboto', 'sans-serif';
+            line-height: 30px;
+            width: 100%;
+            height: 200px;
+        }
+*/
+
+        #street_view {
+            width: 100%;
+            height: 300px;
+        }
+
+
+        #rating_text,
+        #rating_time,
+        #reviews_star {
+            display: inline;
+        }
+
+        #open_local_time,
+        #daily_open_hours {
+            display: inline;
+        }
+
+        /* The Modal (background) */
+
+        .modal {
+            display: none;
+            /* Hidden by default */
+            position: fixed;
+            /* Stay in place */
+            z-index: 1;
+            /* Sit on top */
+            padding-top: 100px;
+            /* Location of the box */
+            left: 0;
+            top: 0;
+            width: 100%;
+            /* Full width */
+            height: 100%;
+            /* Full height */
+            overflow: auto;
+            /* Enable scroll if needed */
+            background-color: rgb(0, 0, 0);
+            /* Fallback color */
+            background-color: rgba(0, 0, 0, 0.4);
+            /* Black w/ opacity */
+        }
+
+        /* Modal Content */
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            height: 80%;
+        }
+        
+        #modal_table {
+            width: 100%;
+            height: 100%;
+        }
+
+        td {
+            border-top: 1px solid #ddd;
+            height: 36px;
+        }
+
+        .week {
+            width: 130px;
+        }
+
+        #hours1,
+        #hours2,
+        #hours3,
+        #hours4,
+        #hours5,
+        #hours6,
+        #hours7 {
+            width: 220px;
+        }
+
+        #open_hours {
+            font-weight: bold;
+        }
+
+        #modal_table {
+/*            padding-bottom: 20px;*/
+        }
+
+        /* The Close Button */
+
+        .close {
+            color: #000;
+            float: right;
+/*            font-size: 28px;*/
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        #close_button {
+            text-align: right;
+        }
+
+        #close {
+            background-color: #878d94;
+            color: white;
+        }
+
+        .card-columns {
+            column-count: 4;
+            display: inline-block;
+        }
+
+        #photos {
+            width: 100%;
+        }
+/*
+
+        #photo_col_1,
+        #photo_col_2,
+        #photo_col_3,
+        #photo_col_4 {
+            width: 225px;
+        }
+*/
+
+        #map_form {
+            margin-top: 15px;
+            width: 100%;
+            margin-left: -15px;
+        }
+
+        #map,
+        #street_view,
+        #route_panel {
+            margin-bottom: 20px;
+        }
+
+        #nav_bar {
+            justify-content: flex-end;
+        }
+
+        .nav_bar {
+            justify-content: flex-end;
+            float: right;
+        }
+
+        .span6 {
+            justify-content: flex-end;
+            float: right;
+        }
+
+        #reviews_table,
+        #yelp_table {
+            width: 100%;
+            margin-top: 15px;
+        }
+
+        #Reviews_table,
+        #Yelp_table {
+            border: 1px solid #ddd;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        #author_photo,
+        #author_name,
+        #author_rating,
+        #author_text {
+            border: 0;
+            height: 20px;
+        }
+
+        #author_photo {
+            width: 75px;
+            text-align: center;
+            padding-top: 10px;
+        }
+
+        #author_name {
+            height: 30px;
+            padding-top: 10px;
+        }
+
+        #author_text {
+            height: 45px;
+        }
+
+        #author_photo:hover {
+            background-color: white;
+        }
+
+        #author_name:hover {
+            background-color: white;
+        }
+
+        #author_rating:hover {
+            background-color: white;
+        }
+
+        #author_text:hover {
+            background-color: white;
+        }
+
+        #rating_time {
+            color: "#9b9b9b";
+        }
+
+        #alerts {
+            margin-top: 100px;
+        }
+
+    </style>
+</head>
+
+<body>
+    <div>
+        <div id="form_section">
+            <form id="myForm" class="form-group row" name="myForm" ng-controller="formController">
+                <h1 id="form_title">Travel and Entertainment Search</h1>
+                <div id="form_elements">
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" for="keyword">Keyword<span style="color:red;">*</span></label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" name="keyword" id="keyword" ng-model="keyword" required>
+                            <span ng-show="myForm.keyword.$touched && myForm.keyword.$invalid" id="keyword_alert">Please enter a keyword.</span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" for="category">Category</label>
+                        <div class="col-sm-6">
+                            <select class="form-control" id="category" name="category" ng-model="category" ng-init="category='Default'">
+                                <option value="Default">Default</option>
+                                <option value="Airport">Airport</option>
+                                <option value="Amusement Park">Amusement Park</option>
+                                <option value="Aquarium">Aquarium</option>
+                                <option value="Art Gallery">Art Gallery</option>
+                                <option value="Bakery">Bakery</option>
+                                <option value="Bar">Bar</option>
+                                <option value="Beauty Salon">Beauty Salon</option>
+                                <option value="Bowling Alley">Bowling Alley</option>
+                                <option value="Bus Station">Bus Station</option>
+                                <option value="Cafe">Cafe</option>
+                                <option value="Campground">Campground</option>
+                                <option value="Car Rental">Car Rental</option>
+                                <option value="Casino">Casino</option>
+                                <option value="Lodging">lodging</option>
+                                <option value="Movie Theater">Movie Theater</option>
+                                <option value="Museum">Museum</option>
+                                <option value="Night Club">Night Club</option>
+                                <option value="Park">Park</option>
+                                <option value="Parking">Parking</option>
+                                <option value="Restaurant">Restaurant</option>
+                                <option value="Shopping Mall">Shopping Mall</option>
+                                <option value="Stadium">Stadium</option>
+                                <option value="Subway Station">Subway Station</option>
+                                <option value="Taxi Stand">Taxi Stand</option>
+                                <option value="Train Station">Train Station</option>
+                                <option value="Travel Agency">Tavel Agency</option>
+                                <option value="Zoo">Zoo</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" for="distance">Distance(miles)</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" id="distance" name="distance" placeholder="10" ng-model="distance">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">From<span style="color:red;">*</span></label>
+                        <div class="col-md-9">
+                            <div class="radio">
+                                <label class="control-label"><input type="radio" name="location" id="current_location" onclick="setInputLocationDisable()" value="current_location" checked>Current location</label>
+                            </div>
+                            <div class="radio">
+                                <label class="control-label"><input type="radio" name="location" id="other_location" onclick="setInputLocationRequire()" value="other_location">Other. Please specify:</label>
+                            </div>
+                            <div class="col-sm-13">
+                                <input type="text" class="form-control" placeholder="Enter a location" id="inputLocation" name="input_location" onFocus="geolocate()" disabled>
+                                <span class="error">Please enter a location.</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-10">
+                            <button type="submit" class="btn btn-primary" id="search" ng-model="search" ng-click="makeRequest()" ng-disabled="myForm.$invalid"><i class="fas fa-search"></i>Search</button>
+                            <button type="reset" class="btn btn-default" id="clear" onclick="clearFunc()">Clear</button>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+
+        <div id="buttons_res_fav" align="center">
+            <div class="btn-group" id="results_favorites_button">
+                <button type="button" id="Results" class="btn btn-primary" align="center" onclick="showResults()">Results</button>
+                <button type="button" id="Favorites" class="btn btn-default" align="center" onclick="showFav()">Favorites</button>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="body_container" class="container">
+        <div id="progress_bar" style="display:none;">
+            <div class="progress" id="progress_half" style="display:none;">
+                <div class="progress-bar progress-bar-striped" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+            <div class="progress" id="progress_done" style="display:none;">
+                <div class="progress-bar progress-bar-striped" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+        </div>
+        <div id="Details_button" style="display:none;"><button class="btn btn-default" id="Details" disabled>Details<i class="fas fa-chevron-right"></i></button></div>
+        <div id="showPlaces" style="display:none;"></div>
+        <div id="showFavorites" style="display:none;"></div>
+        <div id="page_buttons_results" style="display:none;"></div>
+        <div id="page_buttons_fav" style="display:none;"></div>
+
+        <div id="details" style="display:none;">
+            <h1 id="place_name"></h1>
+            <div id="detail_button">
+                <button class="btn btn-default" id="back_to_list" type="button"><i class="fas fa-chevron-left"></i>List</button>
+                <div id="fav_twitter_container">
+                    <button id="favorite" type="button" class="btn btn-default"><i class="far fa-star"></i></button>
+                    <a href="#" id="open_twitter">
+                        <img id="twitter_img" src="http://cs-server.usc.edu:45678/hw/hw8/images/Twitter.png" height="35px">
+                    </a>
+                </div>
+
+
+            </div>
+
+            <!--
+        <nav class="navbar navbar-default" role="navigation">
+            <div class="collapse navbar-collapse" id="navbar-menu">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="active"><a href="#">Info</a></li>
+                    <li><a href="#">Photos</a></li>
+                    <li><a href="#">Map</a></li>
+                    <li><a href="#">Reviews</a></li>
+                </ul>
+            </div>
+        </nav>
+-->
+
+
+            <div class="container" id="nav_bar">
+                <div class="row">
+                    <div class="span6">
+                        <ul class="nav nav-tabs navbar-nav navbar-right" role="tablist">
+                            <li class="active"><a href="#" id="Info_bar">Info</a></li>
+                            <li><a href="#" id="Photos_bar">Photos</a></li>
+                            <li><a href="#" id="Map_bar">Map </a></li>
+                            <li><a href="#" id="Reviews_bar">Reviews</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!--
+            <nav>
+                <div class="nav_bar">
+                    <div class="nav nav-tabs justify-content-end" id="nav-tab" role="tablist">
+                        <a class="nav-item nav-link active" id="Info_bar" data-toggle="tab" href=" " role="tab" aria-controls="nav-info-out" aria-selected="true">Info</a >
+                        <a class="nav-item nav-link" id="Photos_bar" data-toggle="tab" href="#nav-photos" role="tab" aria-controls="nav-photos" aria-selected="false">Photos</a >
+                        <a class="nav-item nav-link" id="Map_bar" data-toggle="tab" href="#nav-map" role="tab" aria-controls="nav-map" aria-selected="false">Map</a >
+                        <a class="nav-item nav-link" id="Reviews_bar" data-toggle="tab" href="#nav-reviews" role="tab" aria-controls="nav-reviews" aria-selected="false">Reviews</a >
+                </div>
+                </div>
+            </nav>
+-->
+            <br>
+
+            <!--
+        <ul class="nav nav-tabs navbar-right" id="myTab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="Info_bar" data-toggle="tab" href="#" role="tab" aria-controls="home" aria-selected="true">Info</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="Photos_bar" data-toggle="tab" href="#" role="tab" aria-controls="profile" aria-selected="false">Photos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="Map_bar" data-toggle="tab" href="#" role="tab" aria-controls="contact" aria-selected="false">Map</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="Reviews_bar" data-toggle="tab" href="#" role="tab" aria-controls="contact" aria-selected="false">Reviews</a>
+                        </li>
+                        </ul>
+                        <div class="tab-content" id="myTabContent">
+                            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">...</div>
+                            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">...</div>
+                            <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">...</div>
+                        </div>
+                        -->
+
+            <div id="info" style="display:none;">
+                <table id="info_table" class="table table-striped">
+                    <tr id="info_row_1">
+                        <td id="info_col_1">Address</td>
+                        <td id="info_address"></td>
+                    </tr>
+                    <tr id="info_row_2">
+                        <td id="info_col_1">Phone Number</td>
+                        <td id="info_phone"></td>
+                    </tr>
+                    <tr id="info_row_3">
+                        <td id="info_col_1">Price Level</td>
+                        <td id="info_price"></td>
+                    </tr>
+                    <tr id="info_row_4">
+                        <td id="info_col_1">Rating</td>
+                        <td id="info_rating">
+                            <div id="rating_text"></div>
+                            <div class="stars-outer">
+                                <div id="outer_stars"><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i></div>
+                                <div class="stars-inner"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr id="info_row_5">
+                        <td id="info_col_1">Google Page</td>
+                        <td id="info_google"></td>
+                    </tr>
+                    <tr id="info_row_6">
+                        <td id="info_col_1">Website</td>
+                        <td id="info_website"></td>
+                    </tr>
+                    <tr id="info_row_7">
+                        <td id="info_col_1">Hours</td>
+                        <td id="info_hours">
+                            <div id="open_local_time"></div>
+                            <div id="daily_open_hours"><a id="daily_open_hours_link">Daily open hours</a></div>
+                            <!-- The Modal -->
+                            <div id="myModal" class="modal">
+                                <!-- Modal content -->
+                                <div class="modal-content">
+                                    <span class="close">&times;</span>
+                                    <div id="modal_open_hours">
+                                        <p id="open_hours">Open hours</p>
+                                        <hr/>
+                                        <table id="modal_table">
+                                            <tr id="row1">
+                                                <td class="week" id="day1"></td>
+                                                <td id="hours1"></td>
+                                            </tr>
+                                            <tr id="row2">
+                                                <td class="week" id="day2"></td>
+                                                <td id="hours2"></td>
+                                            </tr>
+                                            <tr id="row3">
+                                                <td class="week" id="day3"></td>
+                                                <td id="hours3"></td>
+                                            </tr>
+                                            <tr id="row4">
+                                                <td class="week" id="day4"></td>
+                                                <td id="hours4"></td>
+                                            </tr>
+                                            <tr id="row5">
+                                                <td class="week" id="day5"></td>
+                                                <td id="hours5"></td>
+                                            </tr>
+                                            <tr id="row6">
+                                                <td class="week" id="day6"></td>
+                                                <td id="hours6"></td>
+                                            </tr>
+                                            <tr id="row7">
+                                                <td class="week" id="day7"></td>
+                                                <td id="hours7"></td>
+                                            </tr>
+                                        </table>
+                                        <hr/>
+                                        <div id="close_button">
+                                            <button type="button" id="close">Close</button>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <div id="photos" style="display:none;">
+                <div id="card_columns" class="card_columns">
+                    <div class="col-sm-3" id="photo_col_1"></div>
+                    <div class="col-sm-3" id="photo_col_2"></div>
+                    <div class="col-sm-3" id="photo_col_3"></div>
+                    <div class="col-sm-3" id="photo_col_4"></div>
+                </div>
+            </div>
+
+            <div id="Map" style="display:none;">
+                <form id="map_form">
+                    <div class="form-group col-sm-4">
+                        <label>From</label>
+                        <input type="text" id="map_from" class="form-control autocomplete" onFocus="geolocate()">
+                    </div>
+                    <div class="form-group col-sm-4">
+                        <label>To</label>
+                        <input type="text" id="map_to" class="form-control">
+                    </div>
+                    <div class="form-group col-sm-2">
+                        <label>Travel Mode</label>
+                        <select id="travel_mode" class="form-control">
+                                        <option id="driving" value="DRIVING">Driving</option>
+                                        <option id="bicycling" value="BICYCLING">Bicycling</option>
+                                        <option id="transit" value="TRANSIT">Transit</option>
+                                        <option id="walking" value="WALKING">Walking</option>
+                                    </select>
+                    </div>
+                    <div class="form-group col-sm-2 align-self-end">
+                        <br/>
+                        <button type="button" class="btn btn-primary form-control" id="get_directions">Get Directions</button>
+                    </div>
+                </form>
+                <br/><br/>
+                <div id="toggle_map_1">
+                    <button type="button" id="toggle_button_1"><img src="http://cs-server.usc.edu:45678/hw/hw8/images/Pegman.png" width="30px" height="30px"></button>
+                </div>
+                <div id="toggle_map_2" style="display:none;">
+                    <button type="button" id="toggle_button_2"><img src="http://cs-server.usc.edu:45678/hw/hw8/images/Map.png" width="30px" height="30px"></button>
+                </div>
+                <div id="map"></div>
+                <div id="route_panel"></div>
+                <div id="street_view"></div>
+            </div>
+            <div id="reviews" style="display:none;">
+                <select class="selectpicker" id="reviews_option">
+                                <option selected="selected">Google Reviews</option>
+                                <option>Yelp Reviews</option>
+                            </select>
+                <select class="bootstrap-select" id="order_option">
+                                <option selected="selected">Default Order</option>
+                                <option>Highest Rating</option>
+                                <option>Lowest Rating</option>
+                                <option>Most Recent</option>
+                                <option>Least Recent</option>
+                            </select>
+
+                <br/>
+                <div id="reviews_table"></div>
+                <div id="yelp_table"></div>
+
+            </div>
+        </div>
+        <div id="alerts"></div>
+    </div>
+
+    <script src="myAngular.js"></script>
+</body>
+
+</html>

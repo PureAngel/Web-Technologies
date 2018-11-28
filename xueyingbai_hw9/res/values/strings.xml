@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Places Search</string>
+    <string name="inputlocation">Type in the location</string>
+    <string name="search_results">Search results</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
